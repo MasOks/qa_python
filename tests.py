@@ -23,44 +23,22 @@ class TestBooksCollector:
         two_genre = ['Ужасы', 'Детективы']
         assert collector4.genre_age_rating == two_genre
 
-    @pytest.mark.parametrize(
-        'two_books',
-        [
-            'Коллекционер',
-            'Трагедия счастья'
-        ]
-    )
-    def test_add_new_book_add_two_new_books_positive_result(self, two_books):
+    def test_add_new_book_add_two_new_books_positive_result(self):
         collector5 = BooksCollector()
-        collector5.add_new_book(two_books)
+        collector5.add_new_book('Коллекционер')
+        collector5.add_new_book('Трагедия счастья')
         assert len(collector5.get_books_genre()) == 2
 
-    @pytest.mark.parametrize(
-        'four_books',
-        [
-            'Коллекционер',
-            'Трагедия счастья',
-            'Коллекционер',
-            'Десять негритят'
-        ]
-    )
-    def test_add_new_book_add_exist_book_not_added(self, four_books):
+    def test_add_new_book_add_exist_book_not_added(self):
         collector6 = BooksCollector()
-        collector6.add_new_book(four_books)
-        assert len(collector6.get_books_genre()) == 3
+        collector6.add_new_book('Коллекционер')
+        collector6.add_new_book('Коллекционер')
+        assert len(collector6.get_books_genre()) == 1
 
-    @pytest.mark.parametrize(
-        'three_books',
-        [
-            'Коллекционер',
-            'Трагедия счастья',
-            'Бабушка велела кланяться и передать, что просит прощения'
-        ]
-    )
-    def test_add_new_book_length_of_name_is_more_than_40_simbols_not_added(self, three_books):
+    def test_add_new_book_length_of_name_is_more_than_40_simbols_not_added(self):
         collector7 = BooksCollector()
-        collector7.add_new_book(three_books)
-        assert len(collector7.get_books_genre()) == 2
+        collector7.add_new_book('Бабушка велела кланяться и передать, что просит прощения')
+        assert len(collector7.get_books_genre()) == 0
 
     def test_set_book_genre_with_exist_name_and_exist_genre_positive_result(self):
         collector8 = BooksCollector()
@@ -71,34 +49,26 @@ class TestBooksCollector:
     @pytest.mark.parametrize(
         'name, genre',
         [
-            ['Коллекционер', 'Ужасы'],
-            ['Трагедия счастья', 'Комедии'],
-            ['Дракула', 'Ужасы'],
-            ['Оно', 'Ужасы'],
-            ['Человек-амфибия', 'Фантастика']
+            ['Коллекционер', 'Ужасы']
         ]
     )
     def test_get_books_with_specific_genre_with_exist_genre_positive_result(self, name, genre):
         collector9 = BooksCollector()
         collector9.add_new_book(name)
         collector9.set_book_genre(name, genre)
-        assert collector9.get_books_with_specific_genre('Ужасы') == ['Коллекционер', 'Дракула', 'Оно']
+        assert collector9.get_books_with_specific_genre('Ужасы') == ['Коллекционер']
 
     @pytest.mark.parametrize(
         'name, genre',
         [
-            ['Коллекционер', 'Ужасы'],
-            ['Трагедия счастья', 'Комедии'],
-            ['Дракула', 'Ужасы'],
-            ['Оно', 'Ужасы'],
-            ['Человек-амфибия', 'Фантастика']
+            ['Трагедия счастья', 'Комедии']
         ]
     )
     def test_get_books_for_children_with_genre_is_not_age_rating_positive_result(self, name, genre):
         collector10 = BooksCollector()
         collector10.add_new_book(name)
         collector10.set_book_genre(name, genre)
-        assert collector10.get_books_for_children() == ['Трагедия счастья', 'Человек-амфибия']
+        assert collector10.get_books_for_children() == ['Трагедия счастья']
 
     def test_add_book_in_favorites_with_new_favorite_name_positive_result(self):
         collector11 = BooksCollector()
