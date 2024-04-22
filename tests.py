@@ -106,16 +106,9 @@ class TestBooksCollector:
         collector11.add_book_in_favorites('Трагедия счастья')
         assert collector11.get_list_of_favorites_books() == ['Трагедия счастья']
 
-    @pytest.mark.parametrize(
-        'two_books',
-        [
-            'Коллекционер',
-            'Трагедия счастья'
-        ]
-    )
-    def test_delete_book_from_favorites_with_exist_name_positive_result(self, two_books):
+    def test_delete_book_from_favorites_with_exist_name_positive_result(self):
         collector12 = BooksCollector()
-        collector12.add_new_book(two_books)
-        collector12.add_book_in_favorites(two_books)
+        collector12.add_new_book('Трагедия счастья')
+        collector12.add_book_in_favorites('Трагедия счастья')
         collector12.delete_book_from_favorites('Трагедия счастья')
-        assert collector12.get_list_of_favorites_books() == ['Коллекционер']
+        assert collector12.get_list_of_favorites_books() == []
